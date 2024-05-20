@@ -117,7 +117,7 @@ const ActiveCardsDetailsPage = () => {
                                                     See Details
                                                 </Button>
                                             </PopoverTrigger>
-                                            <PopoverContent align='left'>
+                                            <PopoverContent align='end'>
                                                 <div className='grid gap-4'>
                                                     <div className='space-y-2'>
                                                         <h4 className='font-medium leading-none'>{account.accountName}</h4>
