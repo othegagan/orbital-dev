@@ -1,5 +1,4 @@
 'use client';
-import { BsArrowLeftSquareFill, BsArrowRightSquareFill } from 'react-icons/bs';
 import ActiveCardsDetailsPage from '../active_cards';
 import PlaidComponentPage from '../plaid_component';
 import { Button } from '../ui/button';
@@ -17,7 +16,10 @@ const BanksDetailsPage = () => {
                             <Button variant='outlineCustom'>See All</Button>
                         </div>
                     </div>
-                    <div className='px-4 mx-auto'>
+                    <div className='flex justify-end'>
+                        <PlaidComponentPage />
+                    </div>
+                    <div className='mx-auto px-4'>
                         <ActiveCardsDetailsPage />
                     </div>
                 </div>
