@@ -88,10 +88,10 @@ const PlaidComponentPage = ({ section }: { section?: string }) => {
 
                 userDataParsed.plaidBankDetailExist = true;
 
-                // setAccessToken(dataRes.data.accessToken);
+                setAccessToken(dataRes.data.accessToken);
 
-                // const accessToken = dataRes.data.accessToken.replace(/"/g, '');
-                // localStorage.setItem('plaidAccessToken', accessToken);
+                const accessToken = dataRes.data.accessToken.replace(/"/g, '');
+                localStorage.setItem('plaidAccessToken', accessToken);
 
                 window.location.reload();
             } else {

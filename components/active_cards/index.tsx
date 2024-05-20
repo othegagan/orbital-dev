@@ -2,6 +2,10 @@ import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Label } from '@radix-ui/react-label';
+import { Card, CardContent } from '@/components/ui/card';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 
 const ActiveCardsDetailsPage = () => {
     const [loading, setLoading] = useState(false);
@@ -38,7 +42,12 @@ const ActiveCardsDetailsPage = () => {
             const dataRes = response.data;
 
             if (dataRes.success) {
-                setAccounts(dataRes.data);
+                // Merge bankAccounts into one array
+                const mergedBankAccounts = dataRes.data.reduce((acc: string | any[], curr: { bankAccounts: any }) => {
+                    return acc.concat(curr.bankAccounts);
+                }, []);
+                setAccounts(mergedBankAccounts);
+
                 // toast.success(dataRes.message);
             } else {
                 toast.warning(dataRes.message);
@@ -61,88 +70,93 @@ const ActiveCardsDetailsPage = () => {
 
     return (
         <>
-            <div className=' flex items-center gap-2'>
-                {accounts?.map((bank, bankIndex) => (
-                    <div key={bankIndex}>
-                        {bank.bankAccounts.map((account: any, accountIndex: any) => (
-                            <div
-                                key={accountIndex}
-                                className='flex flex-col rounded-[12px] border bg-[#fafafa] shadow-sm dark:border-neutral-700 dark:bg-neutral-800'>
-                                <div className='p-4 md:p-4'>
-                                    <div className='flex items-center justify-between'>
-                                        <div>
-                                            <h2 className='font-weight: 700; text-[18px]  font-semibold text-[#707070]'>
-                                                **** **** **** {account.accountNoMask}
-                                            </h2>
-                                        </div>
-                                        {account.isActive ? (
-                                            <div>
-                                                <span className='inline-flex items-center gap-x-1 rounded-[20px] bg-teal-100 px-4 py-[4px] text-xs font-medium text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'>
-                                                    Active
-                                                </span>
-                                            </div>
-                                        ) : (
-                                            <div>
-                                                <span className='inline-flex items-center gap-x-1 rounded-[20px] bg-red-100 px-4 py-[4px] text-xs font-medium text-red-800 dark:bg-red-500/10 dark:text-red-500'>
-                                                    In Active
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
+            <Carousel
+                opts={{
+                    align: 'start',
+                }}
+                className="w-[90%] ">
+                <CarouselContent>
+                    {accounts.map((account: any, accountIndex: any) => (
+                        <CarouselItem
+                            key={accountIndex}
+                            className='ml-4 md:basis-1/2 lg:basis-1/3 flex flex-col rounded-[12px] border bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800'>
+                            <div className='p-4 md:p-4'>
+                                <div className='flex items-center justify-between'>
                                     <div>
-                                        <h2 className='font-weight: 700; text-[16px]  font-semibold text-[#000000]'>{account.accountName}</h2>
+                                        <h2 className=' text-[18px]  font-semibold text-[#707070]'>**** **** **** {account.accountNoMask}</h2>
                                     </div>
-                                    <div className='grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-2 lg:grid-cols-4'>
-                                        <div className='pt-2 md:pt-3'>
-                                            <div className='flex  lg:justify-start'>
-                                                <div>
-                                                    <h2 className='font-weight: 700;  text-[16px] text-[#747474]'>Current Balance</h2>
-                                                    <p className='font-weight: 600; text-[14px]  font-semibold text-[#000000]'>{account.currentBalance}</p>
-                                                </div>
-                                            </div>
+                                    {account.isActive ? (
+                                        <div>
+                                            <span className='inline-flex items-center gap-x-1 rounded-[20px] bg-teal-100 px-4 py-[4px] text-xs font-medium text-teal-800 dark:bg-teal-500/10 dark:text-teal-500'>
+                                                Active
+                                            </span>
                                         </div>
+                                    ) : (
+                                        <div>
+                                            <span className='inline-flex items-center gap-x-1 rounded-[20px] bg-red-100 px-4 py-[4px] text-xs font-medium text-red-800 dark:bg-red-500/10 dark:text-red-500'>
+                                                In Active
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div>
+                                    <h2 className=' text-[16px]  font-semibold text-[#000000]'>{account.accountName}</h2>
+                                </div>
 
-                                        <div className='pt-2 md:pt-3'>
-                                            <div className='flex lg:justify-center'>
-                                                <div>
-                                                    <h2 className='font-weight: 700;  text-[16px] text-[#747474]'>Available Balance</h2>
-                                                    <p className='font-weight: 600; text-[14px]  font-semibold text-[#000000]'>{account.availableBalance}</p>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div>
+                                    <h2 className='  text-[16px] text-[#747474]'>
+                                        Balance : <span className=' text-[14px]  font-semibold text-[#000000]'>{account.availableBalance}</span>
+                                    </h2>
+                                </div>
 
-                                        <div className='pt-2 md:pt-3'>
-                                            <div className='flex  lg:justify-center'>
-                                                <div>
-                                                    <h2 className='font-weight: 700;  text-[16px] text-[#747474]'>Account Type</h2>
-                                                    <p className='font-weight: 600; text-[14px]  font-semibold text-[#000000]'>{account.accountType}</p>
+                                <div className='pt-2 md:pt-2'>
+                                    <div className='flex justify-start'>
+                                        <Popover>
+                                            <PopoverTrigger>
+                                                <Button size='sm' variant='link' className='underline underline-offset-2'>
+                                                    See Details
+                                                </Button>
+                                            </PopoverTrigger>
+                                            <PopoverContent align='left'>
+                                                <div className='grid gap-4'>
+                                                    <div className='space-y-2'>
+                                                        <h4 className='font-medium leading-none'>{account.accountName}</h4>
+                                                        {/* <p className='text-sm text-muted-foreground'>Set the dimensions for the layer.</p> */}
+                                                    </div>
+                                                    <div className='grid gap-2  text-sm'>
+                                                        <div className='grid grid-cols-2 items-center gap-4'>
+                                                            <Label className='font-semibold'>Type : </Label>
+                                                            <p>{account.accountType}</p>
+                                                        </div>
+                                                        <div className='grid grid-cols-2 items-center gap-4'>
+                                                            <Label className='font-semibold'>Sub Type : </Label>
+                                                            <p>{account.accountSubType}</p>
+                                                        </div>
+                                                        <div className='grid grid-cols-2 items-center gap-4'>
+                                                            <Label className='whitespace-nowrap font-semibold'>Available Balance : </Label>
+                                                            <p>{account.availableBalance}</p>
+                                                        </div>
+                                                        <div className='grid grid-cols-2 items-center gap-4'>
+                                                            <Label className='font-semibold'>Current Balance : </Label>
+                                                            <p>{account.currentBalance}</p>
+                                                        </div>
+                                                        <div className='grid grid-cols-2 items-center gap-4'>
+                                                            <Label className='font-semibold'>Currency Code : </Label>
+                                                            <p>{account.currencyCode}</p>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='pt-2 md:pt-3'>
-                                            <div className='flex lg:justify-end'>
-                                                <div>
-                                                    <h2 className='font-weight: 700;  text-[16px] text-[#747474]'>Currency Type</h2>
-                                                    <p className='font-weight: 600; text-[14px]  font-semibold text-[#000000]'>{account.currencyCode}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className='pt-2 md:pt-2'>
-                                        <div className='flex justify-start'>
-                                            <div>
-                                                <Button variant='outlineCustom'>See Details</Button>
-                                            </div>
-                                        </div>
+                                            </PopoverContent>
+                                        </Popover>
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </div>
-                ))}
-            </div>
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+            </Carousel>
         </>
     );
 };
