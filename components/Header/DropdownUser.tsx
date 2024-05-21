@@ -145,8 +145,7 @@ const DropdownUser = () => {
                     {userData.map((menuItem, index) => (
                         <li key={index} className='group'>
                             {menuItem.path ? (
-                                <Button asChild variant='link' size='lg'>
-                                    <Link
+                                <Link
                                         href={menuItem.path}
                                         className={`flex w-full items-center justify-between rounded-md px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus-visible:ring focus-visible:ring-gray-400 ${
                                             usePathName === menuItem.path
@@ -161,7 +160,6 @@ const DropdownUser = () => {
                                         </div>
                                         <ChevronRightIcon className='h-5 w-5' aria-hidden='true' />
                                     </Link>
-                                </Button>
                             ) : (
                                 <>
                                     <p

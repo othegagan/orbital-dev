@@ -93,17 +93,15 @@ const Header = () => {
                                         {menuData.map((menuItem, index) => (
                                             <li key={index} className='group relative'>
                                                 {menuItem.path ? (
-                                                    <Button asChild variant='link' size='lg'>
-                                                        <Link
-                                                            href={menuItem.path}
-                                                            className={`flex px-8 py-4 text-base lg:mr-0 lg:inline-flex lg:px-4 lg:py-3 ${
-                                                                usePathName === menuItem.path
-                                                                    ? 'font-weight: 600; text-[#01B286]-foreground bg-[#01B286]/5 text-[14px] font-semibold text-[#42a48b] shadow-sm'
-                                                                    : 'font-weight: 600 text-[14px] text-[#747474] hover:text-[#01B286] dark:text-white/70 dark:hover:text-white'
-                                                            }`}>
-                                                            {menuItem.title}
-                                                        </Link>
-                                                    </Button>
+                                                    <Link
+                                                        href={menuItem.path}
+                                                        className={`flex px-8 py-4 text-base lg:mr-0 lg:inline-flex lg:px-4 lg:py-3 ${
+                                                            usePathName === menuItem.path
+                                                                ? 'font-weight: 600; text-[#01B286]-foreground bg-[#01B286]/5 text-[14px] font-semibold text-[#42a48b] shadow-sm'
+                                                                : 'font-weight: 600 text-[14px] text-[#747474] hover:text-[#01B286] dark:text-white/70 dark:hover:text-white'
+                                                        }`}>
+                                                        {menuItem.title}
+                                                    </Link>
                                                 ) : (
                                                     <>
                                                         <p
