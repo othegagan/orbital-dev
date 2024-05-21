@@ -6,8 +6,6 @@ import { safeJSONParse } from '@/lib/utils';
 
 const PlaidComponentPage = ({ section }: { section?: string }) => {
     const [linkToken, setLinkToken] = useState(null);
-    const [publicToken, setPublicToken] = useState('');
-    const [AccessToken, setAccessToken] = useState('');
 
     const [userIdvalue, setuserId] = useState('');
     useEffect(() => {
@@ -52,7 +50,7 @@ const PlaidComponentPage = ({ section }: { section?: string }) => {
     const { open, ready } = usePlaidLink({
         token: linkToken,
         onSuccess: (public_token: string, metadata) => {
-            setPublicToken(public_token);
+            // setPublicToken(public_token);
             // console.log('Public_Token', public_token);
             //Access Token
             onClickGetAccessToken(public_token);
@@ -87,11 +85,6 @@ const PlaidComponentPage = ({ section }: { section?: string }) => {
                 const userDataParsed = safeJSONParse(userDataDetails);
 
                 userDataParsed.plaidBankDetailExist = true;
-
-                setAccessToken(dataRes.data.accessToken);
-
-                const accessToken = dataRes.data.accessToken.replace(/"/g, '');
-                localStorage.setItem('plaidAccessToken', accessToken);
 
                 window.location.reload();
             } else {
