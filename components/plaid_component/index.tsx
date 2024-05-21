@@ -113,7 +113,7 @@ const PlaidComponentPage = ({ section }: { section?: string }) => {
                         type='submit'
                         className='inline-flex w-full items-center justify-center gap-x-2 rounded-[12px] border border-transparent bg-[#01B286] py-3 text-sm font-semibold text-white hover:bg-[#01B286] disabled:pointer-events-none disabled:opacity-50
                  dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600'>
-                        {section == 'hero' ? 'Link a Savings / Current Accout' : 'Add Bank'}{' '}
+                        {section == 'hero' ? 'Link a Savings / Current Accout' : 'Add Accounts'}{' '}
                     </Button>
                 </div>
             </section>

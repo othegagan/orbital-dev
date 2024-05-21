@@ -12,13 +12,12 @@ const BanksDetailsPage = () => {
                         <div>
                             <h2 className='font-weight: 700;  text-[18px] text-[#545454]'>Banks Details</h2>
                         </div>
-                        <div>
+                        <div className='flex items-center gap-4 flex-wrap'>
                             <Button variant='outlineCustom'>See All</Button>
+                            <PlaidComponentPage />
                         </div>
                     </div>
-                    <div className='flex justify-end'>
-                        <PlaidComponentPage />
-                    </div>
+
                     <div className='mx-auto px-4'>
                         <ActiveCardsDetailsPage />
                     </div>
